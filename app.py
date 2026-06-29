@@ -12,7 +12,9 @@ def process_image(url):
         return None
     
     img = Image.open(BytesIO(response.content)).convert("RGBA")
-    img = img.resize((64, 64), Image.LANCZOS)
+    
+    # Locked to 128x128 HD
+    img = img.resize((128, 128), Image.LANCZOS)
     
     # Quantize
     rgb_img = Image.new("RGB", img.size, (255, 255, 255))
@@ -37,7 +39,7 @@ def process_image(url):
         "palette": palette,
         "pixels": pixels,
         "alpha": alpha_data,
-        "size": 64
+        "size": 128 # Tells Roblox it is 128x128
     }
 
 @app.route("/process")
